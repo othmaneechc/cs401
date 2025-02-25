@@ -4,9 +4,11 @@ metadata:
   name: playlist-api-service
   namespace: othmane
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: playlist-api
   ports:
     - port: 52001
       targetPort: 5000
+      nodePort: 32003
+
