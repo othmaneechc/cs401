@@ -54,7 +54,7 @@ def recommend():
     input_songs = data.get("songs", [])
     
     # Normalize input: lowercase and strip whitespace.
-    input_set = set(song.strip().lower() for song in input_songs if song.strip())
+    input_set = set(song.strip() for song in input_songs if song)
     
     if not input_set:
         return jsonify({
