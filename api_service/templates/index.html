@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Playlist Recommendation Service</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1>Playlist Recommendation</h1>
+    <form id="recommendForm">
+      <div class="form-group">
+        <label for="songsInput">Enter Songs (comma separated):</label>
+        <input type="text" class="form-control" id="songsInput" placeholder="e.g. Yesterday, Bohemian Rhapsody">
+      </div>
+      <button type="submit" class="btn btn-primary">Get Recommendations</button>
+    </form>
+    <div id="results" class="mt-4"></div>
+  </div>
+
+  <script>
+    document.getElementById('recommendForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const input = document.getElementById('songsInput').value;
+      // Split the input on commas and trim whitespace
+      const songsArray = input.split(',').map(song => song.trim()).filter(song => song !== "");
+      
+      // Send a POST request to the API endpoint
+      fetch('/api/recommend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ songs: songsArray })
+      })
+      .then(response => response.json())
+      .then(data => {
+        let html = `<h3>Recommendations:</h3><ul>`;
+        data.songs.forEach(song => { html += `<li>${song}</li>`; });
+        html += `</ul>`;
+        html += `<p><strong>Version:</strong> ${data.version}</p>`;
+        html += `<p><strong>Model Date:</strong> ${data.model_date}</p>`;
+        document.getElementById('results').innerHTML = html;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('results').innerHTML = `<p class="text-danger">Error fetching recommendations.</p>`;
+      });
+    });
+  </script>
+</body>
+</html>
