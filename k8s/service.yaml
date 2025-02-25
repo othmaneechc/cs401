@@ -9,4 +9,4 @@ spec:
     app: playlist-api
   ports:
     - port: 52001
-      targetPort: 52001
+      targetPort: 5000
