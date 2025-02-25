@@ -17,6 +17,6 @@ spec:
       - name: quay-secret
       containers:
       - name: cs401-web-client
-        image: quay.io/othmaneechchabi/cs401-web-client:0.1
+        image: quay.io/othmaneechchabi/cs401-web-client:0.2
         ports:
         - containerPort: 80
