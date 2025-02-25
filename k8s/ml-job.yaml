@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: playlist-ml-job
+  namespace: othmane
+spec:
+  template:
+    spec:
+      containers:
+      - name: playlist-ml
+        image: quay.io/othmaneechchabi/playlist-ml:0.4
+        command: ["python", "ml_rules.py"]
+        resources:
+          requests:
+            memory: "12Gi"
+            cpu: "4"
+          limits:
+            memory: "16Gi"
+            cpu: "8"
+        volumeMounts:
+        - name: shared-volume
+          mountPath: /app/model
+        - name: dataset-volume
+          mountPath: /home/datasets/spotify
+      imagePullSecrets:
+      - name: quay-secret
+      restartPolicy: Never
+      volumes:
+      - name: shared-volume
+        persistentVolumeClaim:
+          claimName: project2-pvc-othmane
+      - name: dataset-volume
+        hostPath:
+          path: /home/datasets/spotify
+          type: Directory
+  backoffLimit: 1
