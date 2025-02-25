@@ -69,9 +69,9 @@ def recommend():
     # of the user's input, add the consequent to recommendations.
     for rule in app.rules:
         antecedent, consequent, conf = rule
-        antecedent_lower = set(item.lower() for item in antecedent)
+        antecedent_lower = set(item for item in antecedent)
         if antecedent_lower.issubset(input_set):
-            consequent_lower = set(item.lower() for item in consequent)
+            consequent_lower = set(item for item in consequent)
             recommended.update(consequent_lower)
     
     # Remove any songs that the user already provided.
