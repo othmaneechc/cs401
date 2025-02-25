@@ -14,7 +14,7 @@ spec:
         app: cs401-web-client
     spec:
       containers:
-      - name: web-client
+      - name: cs401-web-client
         image: quay.io/othmaneechchabi/cs401-web-client:0.1
         ports:
         - containerPort: 80
