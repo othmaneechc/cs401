@@ -28,7 +28,7 @@ def generate_rules_fpgrowth(dataset_path, minSupRatio=0.1, minConf=0.5):
     return freqItemSet, rules
 
 def main():
-    dataset_path = "/app/model2023_spotify_ds1.csv"
+    dataset_path = os.getenv("DATASET_PATH", "/home/datasets/spotify/2023_spotify_ds1.csv")
     print("Starting FP-Growth model generation process...")
     freqItemSet, rules = generate_rules_fpgrowth(dataset_path)
     print("Generated rules:")
