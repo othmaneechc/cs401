@@ -4,8 +4,9 @@ import os
 from flask_cors import CORS
 import time
 
-CORS(app)  # This will enable CORS for all routes
 app = Flask(__name__)
+CORS(app)  # This will enable CORS for all routes
+
 MODEL_PATH = "/app/model/model_rules.pickle"
 MODEL_VERSION = "0.1"
 
