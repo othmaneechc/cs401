@@ -3,7 +3,7 @@ from fpgrowth_py import fpgrowth
 import pickle
 import os
 
-def generate_rules_fpgrowth(dataset_path, minSupRatio=0.01, minConf=0.5):
+def generate_rules_fpgrowth(dataset_path, minSupRatio=0.05, minConf=0.5):
     print("Reading dataset from:", dataset_path)
     df = pd.read_csv(dataset_path)
     print("Dataset loaded. Number of rows:", len(df))
