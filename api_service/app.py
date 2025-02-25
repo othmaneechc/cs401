@@ -23,6 +23,11 @@ def load_model():
 model_rules = load_model()
 last_model_mtime = os.path.getmtime(MODEL_PATH) if os.path.exists(MODEL_PATH) else None
 
+@app.route('/')
+def index():
+    # Render a simple web front-end (see templates/index.html)
+    return render_template('index.html')
+    
 @app.route("/api/recommend", methods=["POST"])
 def recommend():
     global model_rules, last_model_mtime
