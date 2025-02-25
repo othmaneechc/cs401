@@ -1,14 +1,14 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: playlist-ml-job-3  # Change 
+  name: playlist-ml-job-4  # Change 
   namespace: othmane
 spec:
   template:
     spec:
       containers:
       - name: playlist-ml
-        image: quay.io/othmaneechchabi/playlist-ml:0.4
+        image: quay.io/othmaneechchabi/playlist-ml:0.5
         command: ["python", "ml_rules.py"]
         env:
           - name: DATASET_PATH
