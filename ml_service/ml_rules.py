@@ -1,36 +1,49 @@
 import pandas as pd
-from mlxtend.frequent_patterns import apriori, association_rules
-from mlxtend.preprocessing import TransactionEncoder
+from fpgrowth_py import fpgrowth
 import pickle
 import os
 
-def generate_rules(dataset_path, min_support=0.01, min_confidence=0.5):
-    # Read the CSV file (adjust the path as needed)
+def generate_rules_fpgrowth(dataset_path, minSupRatio=0.1, minConf=0.5):
+    print("Reading dataset from:", dataset_path)
     df = pd.read_csv(dataset_path)
+    print("Dataset loaded. Number of rows:", len(df))
     
-    # Group by playlist id ('pid') and create baskets of track names
+    print("Grouping data by 'pid' to create baskets of track names.")
     baskets = df.groupby('pid')['track_name'].apply(list).tolist()
+    print("Number of baskets created:", len(baskets))
     
-    # One-hot encode the baskets
-    te = TransactionEncoder()
-    te_array = te.fit(baskets).transform(baskets)
-    df_hot = pd.DataFrame(te_array, columns=te.columns_)
+    # Check if there are at least 2 baskets to generate frequent itemsets
+    if len(baskets) < 2:
+        print("Not enough baskets to generate frequent item sets. Need at least 2, got", len(baskets))
+        return [], []
     
-    # Compute frequent itemsets using Apriori and generate association rules
-    freq_items = apriori(df_hot, min_support=min_support, use_colnames=True)
-    rules = association_rules(freq_items, metric="confidence", min_threshold=min_confidence)
-    return rules
+    print("Running FP-Growth with minSupRatio =", minSupRatio, "and minConf =", minConf)
+    result = fpgrowth(baskets, minSupRatio=minSupRatio, minConf=minConf)
+    if result is None:
+        print("No frequent item set found with the given thresholds.")
+        freqItemSet, rules = [], []
+    else:
+        freqItemSet, rules = result
+        print("FP-Growth complete. Number of rules generated:", len(rules))
+    return freqItemSet, rules
 
-if __name__ == "__main__":
-    # Ensure that the dataset file exists on the node at this location
-    dataset_path = "/home/datasets/spotify/2023_spotify_ds2.csv"
-    rules = generate_rules(dataset_path)
+def main():
+    dataset_path = "/app/model2023_spotify_ds1.csv"
+    print("Starting FP-Growth model generation process...")
+    freqItemSet, rules = generate_rules_fpgrowth(dataset_path)
     print("Generated rules:")
     print(rules)
     
-    # Save the model (rules) to a directory that will be shared with the API
     model_dir = "/app/model"
+    print("Ensuring that the model directory exists at:", model_dir)
     os.makedirs(model_dir, exist_ok=True)
-    with open(os.path.join(model_dir, "model_rules.pickle"), "wb") as f:
-        pickle.dump(rules, f)
-    print("Model saved to /app/model/model_rules.pickle")
+    
+    model_file_path = os.path.join(model_dir, "model_rules.pickle")
+    print("Saving model to:", model_file_path)
+    with open(model_file_path, "wb") as f:
+        # Save both frequent item sets and rules
+        pickle.dump((freqItemSet, rules), f)
+    print("Model successfully saved to", model_file_path)
+
+if __name__ == "__main__":
+    main()

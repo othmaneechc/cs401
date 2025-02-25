@@ -1,6 +1,6 @@
 import requests
 
-API_URL = "http://localhost:52001/api/recommend"  # Adjust if needed
+API_URL = "http://localhost:52001/api/recommend"
 
 def get_recommendations(songs):
     data = {"songs": songs}
