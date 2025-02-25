@@ -2,11 +2,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: cs401-web-client
+  namespace: othmane
 spec:
+  type: NodePort
   selector:
     app: cs401-web-client
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: NodePort
+      port: 80          # The port your container listens on
+      targetPort: 80    # The container port
+      nodePort: 32080   # An external port on your node (choose one in the allowed range, typically 30000-32767)
