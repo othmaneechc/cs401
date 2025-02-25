@@ -28,11 +28,11 @@ def load_songs_dataset(file_path):
             reader = csv.DictReader(csvfile)
             # Try to read the 'song' field; fallback to the first column if not present.
             for row in reader:
-                if "song" in row:
-                    songs.append(row["song"].strip())
+                if "track_name" in row:
+                    songs.append(row["track_name"])
                 else:
                     # Fallback: use first column value
-                    songs.append(list(row.values())[0].strip())
+                    songs.append(list(row.values())[1])
     except Exception as e:
         print("Error loading songs dataset:", e)
     return songs
@@ -82,7 +82,7 @@ def recommend():
     desired_recommendation_count = 3
     if len(recommended) < desired_recommendation_count:
         # Normalize full songs dataset to lowercase for matching.
-        all_songs = set(song.strip().lower() for song in app.songs_dataset)
+        all_songs = set(song.strip()for song in app.songs_dataset)
         # Exclude songs already in input or already recommended.
         available_songs = list(all_songs - input_set - recommended)
         needed = desired_recommendation_count - len(recommended)
