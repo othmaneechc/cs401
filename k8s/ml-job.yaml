@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: playlist-ml-job
+  name: playlist-ml-job-1  # Change this each time you update the dataset
   namespace: othmane
 spec:
   template:
@@ -10,27 +10,30 @@ spec:
       - name: playlist-ml
         image: quay.io/othmaneechchabi/playlist-ml:0.4
         command: ["python", "ml_rules.py"]
+        env:
+          - name: DATASET_PATH
+            value: "/home/datasets/spotify/2023_spotify_ds1.csv"  # Current dataset
         resources:
           requests:
-            memory: "12Gi"
-            cpu: "4"
+            memory: "4Gi"
+            cpu: "2"
           limits:
-            memory: "16Gi"
-            cpu: "8"
+            memory: "8Gi"
+            cpu: "4"
         volumeMounts:
-        - name: shared-volume
-          mountPath: /app/model
-        - name: dataset-volume
-          mountPath: /home/datasets/spotify
+          - name: shared-volume
+            mountPath: /app/model
+          - name: dataset-volume
+            mountPath: /home/datasets/spotify
       imagePullSecrets:
-      - name: quay-secret
+        - name: quay-secret
       restartPolicy: Never
       volumes:
-      - name: shared-volume
-        persistentVolumeClaim:
-          claimName: project2-pvc-othmane
-      - name: dataset-volume
-        hostPath:
-          path: /home/datasets/spotify
-          type: Directory
+        - name: shared-volume
+          persistentVolumeClaim:
+            claimName: project2-pvc-othmane
+        - name: dataset-volume
+          hostPath:
+            path: /home/datasets/spotify
+            type: Directory
   backoffLimit: 1
