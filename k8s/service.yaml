@@ -8,6 +8,6 @@ spec:
   ports:
     - port: 52001
       targetPort: 52001
-      nodePort: 32002
+      nodePort: 32082
   selector:
     app: playlist-api
