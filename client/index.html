@@ -24,7 +24,7 @@
       const input = document.getElementById('songInput').value;
       const songs = input.split(',').map(s => s.trim());
 
-      fetch('http://localhost:52001/api/recommend', {
+      fetch('http://128.110.96.29:52001/api/recommend', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ songs: songs })

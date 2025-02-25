@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 import pickle
 import os
+from flask_cors import CORS
 import time
 
+CORS(app)  # This will enable CORS for all routes
 app = Flask(__name__)
 MODEL_PATH = "/app/model/model_rules.pickle"
 MODEL_VERSION = "0.1"
