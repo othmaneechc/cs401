@@ -71,21 +71,21 @@ document.getElementById('getRecBtn').addEventListener('click', function() {
     return response.json();
   })
   .then(data => {
-    let html = `<h3>Your Songs:</h3>`;
-    html += `<ul>`;
-    addedSongs.forEach(song => {
-      // Create SoundCloud search link for the added song.
-      const soundcloudLink = "https://soundcloud.com/search?q=" + encodeURIComponent(song);
-      html += `<li class="recommendation-item">
-                <span>${song}</span>
-                <a href="${soundcloudLink}" target="_blank">
-                  <button class="play-btn">▶</button>
-                </a>
-              </li>`;
-    });
-    html += `</ul>`;
+    // let html = `<h3>Your Songs:</h3>`;
+    // html += `<ul>`;
+    // addedSongs.forEach(song => {
+    //   // Create SoundCloud search link for the added song.
+    //   const soundcloudLink = "https://soundcloud.com/search?q=" + encodeURIComponent(song);
+    //   html += `<li class="recommendation-item">
+    //             <span>${song}</span>
+    //             <a href="${soundcloudLink}" target="_blank">
+    //               <button class="play-btn">▶</button>
+    //             </a>
+    //           </li>`;
+    // });
+    // html += `</ul>`;
     
-    html += `<h3>Recommendations:</h3>`;
+    let html = `<h3>Recommendations:</h3>`;
     if (data.songs && data.songs.length > 0) {
       if (data.message) {
         html += `<p class="text-info">${data.message}</p>`;
