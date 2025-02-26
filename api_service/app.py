@@ -26,12 +26,11 @@ def load_songs_dataset(file_path):
     try:
         with open(file_path, "r", encoding="utf-8") as csvfile:
             reader = csv.DictReader(csvfile)
-            # Try to read the 'song' field; fallback to the first column if not present.
+            # Try to read the 'track_name' field; fallback to the second column if not present.
             for row in reader:
                 if "track_name" in row:
                     songs.append(row["track_name"])
                 else:
-                    # Fallback: use first column value
                     songs.append(list(row.values())[1])
     except Exception as e:
         print("Error loading songs dataset:", e)
@@ -54,7 +53,7 @@ def recommend():
     input_songs = data.get("songs", [])
     
     # Normalize input: lowercase and strip whitespace.
-    input_set = set(song.strip() for song in input_songs if song)
+    input_set = set(song.strip().lower() for song in input_songs if song)
     
     if not input_set:
         return jsonify({
@@ -64,35 +63,43 @@ def recommend():
         }), 400
 
     recommended = set()
-    
+    rule_found = False  # Flag to track if any rule matches the input
+
     # Use association rules: for each rule, if the rule's antecedent is a subset
     # of the user's input, add the consequent to recommendations.
     for rule in app.rules:
         antecedent, consequent, conf = rule
-        antecedent_lower = set(item for item in antecedent)
+        antecedent_lower = set(item.strip().lower() for item in antecedent)
         if antecedent_lower.issubset(input_set):
-            consequent_lower = set(item for item in consequent)
-            recommended.update(consequent_lower)
+            rule_found = True
+            # Add the consequent songs after normalizing.
+            recommended.update(set(item.strip().lower() for item in consequent))
     
     # Remove any songs that the user already provided.
     recommended = recommended - input_set
 
-    # If recommendations from rules are insufficient (e.g., less than 3 songs),
-    # supplement with additional songs from the full songs dataset.
     desired_recommendation_count = 3
-    if len(recommended) < desired_recommendation_count:
-        # Normalize full songs dataset to lowercase for matching.
-        all_songs = set(song.strip()for song in app.songs_dataset)
-        # Exclude songs already in input or already recommended.
-        available_songs = list(all_songs - input_set - recommended)
-        needed = desired_recommendation_count - len(recommended)
-        if available_songs:
-            supplemental = random.sample(available_songs, min(needed, len(available_songs)))
-            recommended.update(supplemental)
+    message = None
 
-    # Final recommendations list.
+    if not rule_found:
+        # No rules matched; return 3 random songs from the full dataset.
+        all_songs = set(song.strip().lower() for song in app.songs_dataset)
+        available_songs = list(all_songs - input_set)
+        if available_songs:
+            recommended = set(random.sample(available_songs, min(desired_recommendation_count, len(available_songs))))
+        message = "No direct recommendations found. Here are 3 random recommendations:"
+    else:
+        # If there are some recommendations from rules but fewer than desired, supplement.
+        if len(recommended) < desired_recommendation_count:
+            all_songs = set(song.strip().lower() for song in app.songs_dataset)
+            available_songs = list(all_songs - input_set - recommended)
+            needed = desired_recommendation_count - len(recommended)
+            if available_songs:
+                recommended.update(random.sample(available_songs, min(needed, len(available_songs))))
+
     recommendations_list = list(recommended)
-    message = None if recommendations_list else "No recommendations found based on the input songs."
+    if not recommendations_list:
+        message = "No recommendations found based on the input songs."
 
     return jsonify({
         "songs": recommendations_list,
