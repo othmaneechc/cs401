@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Playlist Recommendation Service</title>
+  <!-- Bootstrap CSS CDN -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Custom Spotify-themed CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container mt-5">
@@ -17,47 +20,7 @@
     </form>
     <div id="results" class="mt-4"></div>
   </div>
-
-  <script>
-document.getElementById('recommendForm').addEventListener('submit', function(event) {
-  event.preventDefault();
-  const input = document.getElementById('songsInput').value;
-  const songsArray = input.split(',').map(song => song.trim()).filter(song => song !== "");
-  
-  fetch('/api/recommend', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ songs: songsArray })
-  })
-  .then(response => {
-    // Check if response is OK; if not, extract error message and throw it
-    if (!response.ok) {
-      return response.json().then(err => { throw err; });
-    }
-    return response.json();
-  })
-  .then(data => {
-    let html = `<h3>Recommendations:</h3>`;
-    if(data.songs && data.songs.length > 0) {
-      html += `<ul>`;
-      data.songs.forEach(song => {
-        html += `<li>${song}</li>`;
-      });
-      html += `</ul>`;
-    } else if(data.error) {
-      html += `<p class="text-danger">${data.error}</p>`;
-    } else {
-      html += `<p>No recommendations found.</p>`;
-    }
-    html += `<p><strong>Version:</strong> ${data.version}</p>`;
-    html += `<p><strong>Model Date:</strong> ${data.model_date}</p>`;
-    document.getElementById('results').innerHTML = html;
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    document.getElementById('results').innerHTML = `<p class="text-danger">Error: ${error.error || 'An unexpected error occurred.'}</p>`;
-  });
-});
-  </script>
+  <!-- External JavaScript -->
+  <script src="script.js"></script>
 </body>
 </html>

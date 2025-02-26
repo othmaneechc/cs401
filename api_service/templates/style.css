@@ -1,0 +1,41 @@
+/* Spotify-themed style */
+body {
+    background-color: #191414;
+    color: #fff;
+    font-family: Arial, sans-serif;
+  }
+  
+  .container {
+    max-width: 600px;
+    background-color: #282828;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 50px;
+  }
+  
+  h1 {
+    color: #1DB954;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .btn-primary {
+    background-color: #1DB954;
+    border-color: #1DB954;
+  }
+  
+  .btn-primary:hover {
+    background-color: #17a44d;
+    border-color: #17a44d;
+  }
+  
+  .form-control {
+    background-color: #333;
+    color: #fff;
+    border: none;
+  }
+  
+  .form-control::placeholder {
+    color: #bbb;
+  }
+  
