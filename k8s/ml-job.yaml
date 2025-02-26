@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: playlist-ml-job-7  # Change 
+  name: playlist-ml-job-8  # Change 
   namespace: othmane
 spec:
   template:
@@ -12,7 +12,7 @@ spec:
         command: ["python", "ml_rules.py"]
         env:
           - name: DATASET_PATH
-            value: "/home/datasets/spotify/2023_spotify_ds1.csv"  # Change
+            value: "/home/datasets/spotify/2023_spotify_ds2.csv"  # Change
         resources:
           requests:
             memory: "4Gi"
