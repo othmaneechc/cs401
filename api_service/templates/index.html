@@ -6,7 +6,7 @@
   <!-- Bootstrap CSS CDN -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <!-- Custom Spotify-themed CSS -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
   <div class="container mt-5">
@@ -21,6 +21,6 @@
     <div id="results" class="mt-4"></div>
   </div>
   <!-- External JavaScript -->
-  <script src="script.js"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
