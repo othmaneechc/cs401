@@ -1,41 +1,65 @@
-/* Spotify-themed style */
+/* Base Spotify-themed style */
 body {
-    background-color: #191414;
-    color: #fff;
-    font-family: Arial, sans-serif;
-  }
-  
+  background-color: #191414;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 600px;
+  background-color: #282828;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 50px auto;
+}
+
+h1 {
+  color: #1DB954;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  background-color: #1DB954;
+  border-color: #1DB954;
+}
+
+.btn-primary:hover {
+  background-color: #17a44d;
+  border-color: #17a44d;
+}
+
+.form-control {
+  background-color: #333;
+  color: #fff;
+  border: none;
+}
+
+.form-control::placeholder {
+  color: #bbb;
+}
+
+/* Responsive styles for mobile devices */
+@media (max-width: 768px) {
   .container {
-    max-width: 600px;
-    background-color: #282828;
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 50px;
+    width: 90%;
+    padding: 15px;
+    margin: 20px auto;
   }
-  
+
   h1 {
-    color: #1DB954;
-    text-align: center;
-    margin-bottom: 20px;
+    font-size: 1.5em;
+    margin-bottom: 15px;
   }
-  
+
   .btn-primary {
-    background-color: #1DB954;
-    border-color: #1DB954;
+    width: 100%;
+    padding: 10px;
   }
-  
-  .btn-primary:hover {
-    background-color: #17a44d;
-    border-color: #17a44d;
-  }
-  
+
   .form-control {
-    background-color: #333;
-    color: #fff;
-    border: none;
+    padding: 8px;
   }
-  
-  .form-control::placeholder {
-    color: #bbb;
-  }
-  
+}
