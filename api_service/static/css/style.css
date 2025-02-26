@@ -15,22 +15,13 @@ body {
   margin: 50px auto;
 }
 
-h1 {
+/* Headings */
+h1, h4 {
   color: #1DB954;
   text-align: center;
-  margin-bottom: 20px;
 }
 
-.btn-primary {
-  background-color: #1DB954;
-  border-color: #1DB954;
-}
-
-.btn-primary:hover {
-  background-color: #17a44d;
-  border-color: #17a44d;
-}
-
+/* Form controls */
 .form-control {
   background-color: #333;
   color: #fff;
@@ -41,6 +32,55 @@ h1 {
   color: #bbb;
 }
 
+/* Buttons */
+.btn-primary {
+  background-color: #1DB954;
+  border-color: #1DB954;
+  border-radius: 50px;
+}
+
+.btn-primary:hover {
+  background-color: #17a44d;
+  border-color: #17a44d;
+}
+
+.btn-secondary {
+  background-color: #555;
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background-color: #777;
+}
+
+/* List styling for user songs and recommendations */
+#songList li, .recommendation-item {
+  padding: 8px;
+  margin-bottom: 5px;
+  background-color: #333;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Play button for recommendations */
+.play-btn {
+  background-color: #1DB954;
+  border: none;
+  border-radius: 50%;
+  padding: 5px 8px;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.play-btn:hover {
+  background-color: #17a44d;
+}
+
 /* Responsive styles for mobile devices */
 @media (max-width: 768px) {
   .container {
@@ -49,12 +89,11 @@ h1 {
     margin: 20px auto;
   }
 
-  h1 {
+  h1, h4 {
     font-size: 1.5em;
-    margin-bottom: 15px;
   }
 
-  .btn-primary {
+  .btn-primary, .btn-secondary {
     width: 100%;
     padding: 10px;
   }
