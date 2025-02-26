@@ -2,77 +2,64 @@
 body {
   background-color: #191414;
   color: #fff;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
 
-/* Main container styling */
-.main-container {
+.container {
   max-width: 600px;
   background-color: #282828;
   padding: 20px;
   border-radius: 8px;
-  margin: 40px auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 50px auto;
 }
 
-/* Title styling */
-.title {
+h1 {
   color: #1DB954;
   text-align: center;
   margin-bottom: 20px;
 }
 
-/* Form input styling */
+.btn-primary {
+  background-color: #1DB954;
+  border-color: #1DB954;
+}
+
+.btn-primary:hover {
+  background-color: #17a44d;
+  border-color: #17a44d;
+}
+
 .form-control {
   background-color: #333;
-  border: none;
   color: #fff;
+  border: none;
 }
 
 .form-control::placeholder {
   color: #bbb;
 }
 
-/* Button styling */
-.btn-primary {
-  background-color: #1DB954;
-  border: none;
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-}
-
-.btn-primary:hover {
-  background-color: #17a44d;
-}
-
-/* Results area */
-.results {
-  margin-top: 20px;
-}
-
 /* Responsive styles for mobile devices */
 @media (max-width: 768px) {
-  .main-container {
+  .container {
     width: 90%;
     padding: 15px;
     margin: 20px auto;
   }
 
-  .title {
+  h1 {
     font-size: 1.5em;
     margin-bottom: 15px;
   }
 
   .btn-primary {
+    width: 100%;
     padding: 10px;
-    font-size: 14px;
   }
 
   .form-control {
-    padding: 10px;
-    font-size: 14px;
+    padding: 8px;
   }
 }
