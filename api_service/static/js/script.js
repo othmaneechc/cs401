@@ -76,7 +76,7 @@ document.getElementById('getRecBtn').addEventListener('click', function() {
     addedSongs.forEach(song => {
       // Create SoundCloud search link for the added song.
       const soundcloudLink = "https://soundcloud.com/search?q=" + encodeURIComponent(song);
-      html += `<li class="song-item">
+      html += `<li class="recommendation-item">
                 <span>${song}</span>
                 <a href="${soundcloudLink}" target="_blank">
                   <button class="play-btn">▶</button>

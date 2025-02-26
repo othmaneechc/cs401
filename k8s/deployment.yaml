@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: playlist-api
-        image: quay.io/othmaneechchabi/playlist-api:2.9
+        image: quay.io/othmaneechchabi/playlist-api:3.0
         ports:
         - containerPort: 5000
         volumeMounts:
