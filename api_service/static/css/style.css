@@ -7,6 +7,11 @@ body {
   padding: 0;
 }
 
+.h2, .h3, .h4, .h5, .h6, h2, h3, h4, h5, h6 {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
 .container {
   max-width: 600px;
   background-color: #000000;
@@ -19,11 +24,12 @@ body {
 h1, h4 {
   color: #1DB954;
   text-align: center;
+  font-weight: 600;
 }
 
 /* Form controls */
 .form-control {
-  background-color: #000000;
+  background-color: #555;
   color: #fff;
   border: none;
 }

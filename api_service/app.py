@@ -46,6 +46,16 @@ print(f"Loaded songs dataset with {len(app.songs_dataset)} songs.")
 # Build a mapping for normalized song name to original formatting.
 app.songs_mapping = {normalize(song): song.strip() for song in app.songs_dataset}
 
+# Helper function to get the original song title from a normalized version.
+def get_original_song(normalized_song):
+    original = app.songs_mapping.get(normalized_song)
+    if original:
+        return original
+    for song in app.songs_dataset:
+        if normalize(song) == normalized_song:
+            return song.strip()
+    return normalized_song
+
 # Define version and model_date for display purposes.
 app.version = "0.1"
 app.model_date = "2023-04-01"  # Update accordingly
@@ -103,7 +113,7 @@ def recommend():
                 recommended.update(random.sample(available_songs, min(needed, len(available_songs))))
 
     # Map normalized recommendations back to their original formatting.
-    recommendations_list = [app.songs_mapping.get(song, song) for song in recommended]
+    recommendations_list = [get_original_song(song) for song in recommended]
     if not recommendations_list:
         message = "No recommendations found based on the input songs."
 
