@@ -1,13 +1,35 @@
 // Global array to store added songs
 let addedSongs = [];
 
-// Update the displayed list of user-added songs
+// Update the displayed list of user-added songs with a SoundCloud link for each
 function updateSongList() {
   const songList = document.getElementById('songList');
   songList.innerHTML = '';
   addedSongs.forEach((song, index) => {
+    // Create a SoundCloud search URL for this song.
+    const soundcloudLink = "https://soundcloud.com/search?q=" + encodeURIComponent(song);
+    
     const li = document.createElement('li');
-    li.textContent = song;
+    li.classList.add('song-item');
+    
+    // Create a span to hold the song text
+    const songText = document.createElement('span');
+    songText.textContent = song;
+    
+    // Create a link wrapping the play button
+    const link = document.createElement('a');
+    link.href = soundcloudLink;
+    link.target = "_blank";
+    
+    const playBtn = document.createElement('button');
+    playBtn.classList.add('play-btn');
+    playBtn.textContent = '▶';  // Play button icon
+    
+    link.appendChild(playBtn);
+    
+    li.appendChild(songText);
+    li.appendChild(link);
+    
     songList.appendChild(li);
   });
 }
@@ -52,7 +74,14 @@ document.getElementById('getRecBtn').addEventListener('click', function() {
     let html = `<h3>Your Songs:</h3>`;
     html += `<ul>`;
     addedSongs.forEach(song => {
-      html += `<li>${song}</li>`;
+      // Create SoundCloud search link for the added song.
+      const soundcloudLink = "https://soundcloud.com/search?q=" + encodeURIComponent(song);
+      html += `<li class="song-item">
+                <span>${song}</span>
+                <a href="${soundcloudLink}" target="_blank">
+                  <button class="play-btn">▶</button>
+                </a>
+              </li>`;
     });
     html += `</ul>`;
     
@@ -63,7 +92,7 @@ document.getElementById('getRecBtn').addEventListener('click', function() {
       }
       html += `<ul>`;
       data.songs.forEach(song => {
-        // URL-encode the song name for the SoundCloud link.
+        // Create a SoundCloud link for each recommended song.
         const soundcloudLink = "https://soundcloud.com/search?q=" + encodeURIComponent(song);
         html += `<li class="recommendation-item">
                   <span>${song}</span>

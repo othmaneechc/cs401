@@ -16,8 +16,13 @@ body {
   max-width: 600px;
   background-color: #000000;
   padding: 20px;
+  padding-top: 50px;
   border-radius: 8px;
   margin: 50px auto;
+}
+
+.song-input-section{
+  padding: 2px;
 }
 
 /* Headings */
