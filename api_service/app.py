@@ -6,6 +6,10 @@ import random
 
 app = Flask(__name__)
 
+# Helper function to normalize song names
+def normalize(text):
+    return text.strip().lower()
+
 # Define paths for the model and songs dataset.
 MODEL_PATH = "/app/model/model_rules.pickle"
 SONGS_DATASET_PATH = "/app/model/2023_spotify_songs.csv"
@@ -40,7 +44,7 @@ app.songs_dataset = load_songs_dataset(SONGS_DATASET_PATH)
 print(f"Loaded songs dataset with {len(app.songs_dataset)} songs.")
 
 # Build a mapping for normalized song name to original formatting.
-app.songs_mapping = {song.strip().lower(): song.strip() for song in app.songs_dataset}
+app.songs_mapping = {normalize(song): song.strip() for song in app.songs_dataset}
 
 # Define version and model_date for display purposes.
 app.version = "0.1"
@@ -56,7 +60,7 @@ def recommend():
     input_songs = data.get("songs", [])
     
     # Normalize input: lowercase and strip whitespace.
-    input_set = set(song.strip().lower() for song in input_songs if song)
+    input_set = set(normalize(song) for song in input_songs if song)
     
     if not input_set:
         return jsonify({
@@ -71,10 +75,10 @@ def recommend():
     # Use association rules: check if any rule's antecedent is a subset of input.
     for rule in app.rules:
         antecedent, consequent, conf = rule
-        antecedent_lower = set(item.strip().lower() for item in antecedent)
-        if antecedent_lower.issubset(input_set):
+        antecedent_normalized = set(normalize(item) for item in antecedent)
+        if antecedent_normalized.issubset(input_set):
             rule_found = True
-            recommended.update(set(item.strip().lower() for item in consequent))
+            recommended.update(set(normalize(item) for item in consequent))
     
     # Remove songs that the user already provided.
     recommended = recommended - input_set
@@ -84,7 +88,7 @@ def recommend():
 
     if not rule_found:
         # No rules matched; return 3 random songs from the full dataset.
-        all_songs = set(song.strip().lower() for song in app.songs_dataset)
+        all_songs = set(normalize(song) for song in app.songs_dataset)
         available_songs = list(all_songs - input_set)
         if available_songs:
             recommended = set(random.sample(available_songs, min(desired_recommendation_count, len(available_songs))))
@@ -92,7 +96,7 @@ def recommend():
     else:
         # If there are rule-based recommendations but fewer than desired, supplement with random songs.
         if len(recommended) < desired_recommendation_count:
-            all_songs = set(song.strip().lower() for song in app.songs_dataset)
+            all_songs = set(normalize(song) for song in app.songs_dataset)
             available_songs = list(all_songs - input_set - recommended)
             needed = desired_recommendation_count - len(recommended)
             if available_songs:

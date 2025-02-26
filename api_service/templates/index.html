@@ -2,25 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Mobile viewport tag -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Playlist Recommendation Service</title>
-  <!-- Bootstrap CSS CDN -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <!-- Custom Spotify-themed CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- Optional: Bootstrap for basic styling -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-  <div class="container mt-5">
-    <h1>Playlist Recommendation</h1>
+  <div class="container mt-5 main-container">
+    <h1 class="title">Playlist Recommendation</h1>
     <form id="recommendForm">
       <div class="form-group">
         <label for="songsInput">Enter Songs (comma separated):</label>
         <input type="text" class="form-control" id="songsInput" placeholder="e.g. Yesterday, Bohemian Rhapsody">
       </div>
-      <button type="submit" class="btn btn-primary">Get Recommendations</button>
+      <button type="submit" class="btn btn-primary btn-submit">Get Recommendations</button>
     </form>
-    <div id="results" class="mt-4"></div>
+    <div id="results" class="results mt-4"></div>
   </div>
-  <!-- External JavaScript -->
+
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
