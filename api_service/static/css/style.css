@@ -1,6 +1,6 @@
 /* Base Spotify-themed style */
 body {
-  background-color: #191414;
+  background-color: #000000;
   color: #fff;
   font-family: Arial, sans-serif;
   margin: 0;
@@ -9,7 +9,7 @@ body {
 
 .container {
   max-width: 600px;
-  background-color: #282828;
+  background-color: #000000;
   padding: 20px;
   border-radius: 8px;
   margin: 50px auto;
@@ -23,7 +23,7 @@ h1, h4 {
 
 /* Form controls */
 .form-control {
-  background-color: #333;
+  background-color: #000000;
   color: #fff;
   border: none;
 }
@@ -94,7 +94,7 @@ h1, h4 {
   }
 
   .btn-primary, .btn-secondary {
-    width: 100%;
+    /* width: 100%; */
     padding: 10px;
   }
 
